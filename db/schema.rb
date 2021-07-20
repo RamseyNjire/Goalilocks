@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_07_20_181533) do
     t.string "title", null: false
     t.text "description", null: false
     t.boolean "completed", default: false, null: false
-    t.boolean "private", default: false, null: false
+    t.boolean "privacy", default: false, null: false
     t.integer "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
