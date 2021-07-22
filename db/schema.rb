@@ -17,12 +17,13 @@ ActiveRecord::Schema.define(version: 2021_07_20_181533) do
 
   create_table "goals", force: :cascade do |t|
     t.string "title", null: false
-    t.text "description", null: false
-    t.boolean "completed", default: false, null: false
-    t.boolean "privacy", default: false, null: false
-    t.integer "creator_id", null: false
+    t.text "description"
+    t.boolean "is_complete", default: false, null: false
+    t.boolean "is_private", default: false, null: false
+    t.bigint "creator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_goals_on_creator_id"
   end
 
   create_table "users", force: :cascade do |t|

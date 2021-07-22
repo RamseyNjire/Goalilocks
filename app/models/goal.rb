@@ -4,12 +4,23 @@
 #
 #  id          :bigint           not null, primary key
 #  title       :string           not null
-#  description :text             not null
-#  completed   :boolean          default(FALSE), not null
-#  privacy     :boolean          default(FALSE), not null
-#  creator_id  :integer          not null
+#  description :text
+#  is_complete :boolean          default(FALSE), not null
+#  is_private  :boolean          default(FALSE), not null
+#  creator_id  :bigint
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 class Goal < ApplicationRecord
+    validates :title, presence: true
+    validates :description, presence: true
+    validates :is_complete, presence: true
+    validates :is_private, presence: true
+
+    belongs_to(
+        :creator,
+        class_name: "User",
+        foreign_key: :creator_id,
+        primary_key: :id
+    )
 end
