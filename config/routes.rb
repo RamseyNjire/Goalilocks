@@ -9,6 +9,14 @@
 #                           PATCH  /users/:id(.:format)                                                                     users#update
 #                           PUT    /users/:id(.:format)                                                                     users#update
 #                           DELETE /users/:id(.:format)                                                                     users#destroy
+#                     goals GET    /goals(.:format)                                                                         goals#index
+#                           POST   /goals(.:format)                                                                         goals#create
+#                  new_goal GET    /goals/new(.:format)                                                                     goals#new
+#                 edit_goal GET    /goals/:id/edit(.:format)                                                                goals#edit
+#                      goal GET    /goals/:id(.:format)                                                                     goals#show
+#                           PATCH  /goals/:id(.:format)                                                                     goals#update
+#                           PUT    /goals/:id(.:format)                                                                     goals#update
+#                           DELETE /goals/:id(.:format)                                                                     goals#destroy
 #               new_session GET    /session/new(.:format)                                                                   sessions#new
 #              edit_session GET    /session/edit(.:format)                                                                  sessions#edit
 #                   session GET    /session(.:format)                                                                       sessions#show
@@ -25,6 +33,7 @@
 
 Rails.application.routes.draw do
   resources :users
+  resources :goals
   resource :session
 
   root to: "users#new"
