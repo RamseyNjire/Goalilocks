@@ -21,4 +21,8 @@ RSpec.describe Goal, type: :model do
     it { should validate_presence_of(:is_complete) }
     it { should validate_presence_of(:is_private) }
   end
+
+  describe "associations" do
+    it { should belong_to(:creator) }
+  end
 end
