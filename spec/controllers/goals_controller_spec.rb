@@ -2,14 +2,11 @@ require 'rails_helper'
 
 RSpec.describe GoalsController, type: :controller do
     subject(:goal){ build(:goal) }
-    let(:user){ build(:user) }
+    let(:user){ create(:user) }
+    before(:each) { allow(controller).to receive(:current_user){ user } }
+
     describe "GET #new" do
         context "when logged in" do
-            before do
-                user.save!
-                allow(controller).to receive(:current_user){ user }
-            end
-
             it "renders the new template" do
                 get :new
                 expect(response).to render_template(:new)
@@ -17,9 +14,27 @@ RSpec.describe GoalsController, type: :controller do
         end
 
         context "when not logged in" do
+            before { allow(controller).to receive(:current_user){ nil } }
             it "redirects to the login page" do
                 get :new
                 expect(response).to redirect_to(new_session_url)
+            end
+        end
+    end
+
+    describe "POST #create" do
+        context "with valid params" do
+            it "redirects to the goal show page" do
+                post :create, params: { goal: {
+                                                title: "Test Goal",
+                                                description: "test goal",
+                                                is_complete: false,
+                                                is_private: false,
+                                                creator_id: user.id
+                } }
+
+                test_goal = Goal.find_by(title: "Test Goal")
+                expect(response).to redirect_to(goal_url(test_goal))
             end
         end
     end

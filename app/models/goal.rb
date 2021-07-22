@@ -14,8 +14,6 @@
 class Goal < ApplicationRecord
     validates :title, presence: true
     validates :description, presence: true
-    validates :is_complete, presence: true
-    validates :is_private, presence: true
 
     belongs_to(
         :creator,
@@ -23,5 +21,5 @@ class Goal < ApplicationRecord
         foreign_key: :creator_id,
         primary_key: :id
     )
-    
+
 end
