@@ -52,7 +52,7 @@ RSpec.describe User, type: :model do
 
     context "with invalid user credentials" do
       it "returns nil" do
-        expect(User.find_by_credentials("NotCaligula", "NotPassword")).not_to eq(user)
+        expect(User.find_by_credentials("Caligula", "Password")).not_to eq(user)
       end
     end
   end

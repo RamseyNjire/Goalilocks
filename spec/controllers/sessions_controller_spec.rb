@@ -43,8 +43,8 @@ RSpec.describe SessionsController, type: :controller do
         context "with invalid params" do
             it "validates the params" do
                 post :create, params: { user: {
-                                                username: "NotCaligula",
-                                                password: "NotPassword"
+                                                username: "Caligula",
+                                                password: "Password"
                 } }
 
                 expect(response).to render_template(:new)
