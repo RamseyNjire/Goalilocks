@@ -86,11 +86,11 @@ RSpec.describe GoalsController, type: :controller do
         end
     end
     
-    describe "POST #update" do
+    describe "PUT #update" do
         before { goal.save! }
         context "when logged in" do
             it "redirects the goal show page" do
-                post :update, params: { id: goal.id, goal: {
+                put :update, params: { id: goal.id, goal: {
                                                             is_complete: true                         
                 } }
                 expect(response).to redirect_to(goal_url(goal))
@@ -100,7 +100,7 @@ RSpec.describe GoalsController, type: :controller do
         context "when not logged in" do
             before { allow(controller).to receive(:current_user){ nil } }
             it "redirects to the login page" do
-                post :update, params: { id: goal.id, goal: {
+                put :update, params: { id: goal.id, goal: {
                                                             is_complete: true                         
                 } }
                 expect(response).to redirect_to(new_session_url)
