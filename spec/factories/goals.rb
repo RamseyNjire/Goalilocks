@@ -17,6 +17,6 @@ FactoryBot.define do
     description { "This is a new goal" }
     is_complete { false }
     is_private { false }
-    creator { create(:user) }
+    creator { create(:goal_creator) }
   end
 end

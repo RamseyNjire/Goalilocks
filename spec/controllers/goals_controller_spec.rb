@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GoalsController, type: :controller do
     subject(:goal){ build(:goal) }
-    let(:user){ create(:user) }
+    let(:user){ goal.creator }
     before(:each) { allow(controller).to receive(:current_user){ user } }
 
     describe "GET #new" do
@@ -103,6 +103,24 @@ RSpec.describe GoalsController, type: :controller do
                 put :update, params: { id: goal.id, goal: {
                                                             is_complete: true                         
                 } }
+                expect(response).to redirect_to(new_session_url)
+            end
+        end
+    end
+
+    describe "DELETE #destroy" do
+        before{ goal.save! }
+        context "when logged in" do
+            it "redirects to user show page" do
+                delete :destroy, params: { id: goal.id }
+                expect(response).to redirect_to(user_url(user))
+            end
+        end
+
+        context "when not logged in" do
+            before { allow(controller).to receive(:current_user){ nil } }
+            it "redirects to the login page" do
+                delete :destroy, params: { id: goal.id }
                 expect(response).to redirect_to(new_session_url)
             end
         end

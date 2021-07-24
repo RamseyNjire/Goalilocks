@@ -37,6 +37,13 @@ class GoalsController < ApplicationController
         end
     end
 
+    def destroy
+        @goal = Goal.find_by(id: params[:id])
+        @user = @goal.creator
+        @goal.destroy
+        redirect_to user_url(@user)
+    end
+
 
     private
 
