@@ -9,8 +9,7 @@
 #                           PATCH  /users/:id(.:format)                                                                     users#update
 #                           PUT    /users/:id(.:format)                                                                     users#update
 #                           DELETE /users/:id(.:format)                                                                     users#destroy
-#                     goals GET    /goals(.:format)                                                                         goals#index
-#                           POST   /goals(.:format)                                                                         goals#create
+#                     goals POST   /goals(.:format)                                                                         goals#create
 #                  new_goal GET    /goals/new(.:format)                                                                     goals#new
 #                 edit_goal GET    /goals/:id/edit(.:format)                                                                goals#edit
 #                      goal GET    /goals/:id(.:format)                                                                     goals#show
@@ -33,7 +32,7 @@
 
 Rails.application.routes.draw do
   resources :users
-  resources :goals
+  resources :goals, except: :index
   resource :session
 
   root to: "users#new"
