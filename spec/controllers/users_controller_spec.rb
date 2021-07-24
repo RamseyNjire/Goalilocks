@@ -3,6 +3,26 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
     subject(:user) { build(:user) }
 
+    describe "GET #index" do
+        context "when not logged in" do
+            it "redirects to the login page" do
+                get :index, {}
+                expect(response).to redirect_to(new_session_url)
+            end
+        end
+
+        context "when logged in" do
+            before do
+                user.save!
+                allow(controller).to receive(:current_user){ user }
+            end
+            it "renders the index template" do
+                get :index, {}
+                expect(response).to render_template(:index)
+            end
+        end
+    end
+
     describe "GET #new" do
         context "when not logged in" do
             it "renders the new template" do

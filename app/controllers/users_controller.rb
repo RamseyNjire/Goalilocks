@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
-    before_action :require_current_user!, only: :show
+    before_action :require_current_user!, only: [:show, :index]
     before_action :require_no_current_user!, only: :new
 
+    def index
+        @users = User.all
+        render :index
+    end
 
     def new
         @user = User.new
