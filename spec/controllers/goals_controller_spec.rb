@@ -37,5 +37,16 @@ RSpec.describe GoalsController, type: :controller do
                 expect(response).to redirect_to(goal_url(test_goal))
             end
         end
+
+        context "with invalid params" do
+            it "renders the new page" do
+                post :create, params: { goal: {
+                                                description: "test goal"
+                } }
+
+                expect(response).to render_template(:new)
+                expect(flash[:errors]).to be_present
+            end
+        end
     end
 end
