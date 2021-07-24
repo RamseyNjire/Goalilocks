@@ -49,4 +49,22 @@ RSpec.describe GoalsController, type: :controller do
             end
         end
     end
+
+    describe "GET #show" do
+    before { goal.save! }
+        context "when logged in" do
+            it "renders the show template" do
+                get :show, params: { id: goal.id }
+                expect(response).to render_template(:show)
+            end
+        end
+
+        context "when not logged in" do
+            before { allow(controller).to receive(:current_user){ nil } }
+            it "redirects to the login page" do
+                get :show, params: { id: goal.id }
+                expect(response).to redirect_to(new_session_url)
+            end
+        end
+    end
 end

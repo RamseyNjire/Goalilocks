@@ -15,7 +15,7 @@ RSpec.describe SessionsController, type: :controller do
             before { user.save! }
             it "redirects to the user show page" do
                 post :create, params: { user: {
-                                                username: "Caligula",
+                                                username: user.username,
                                                 password: "Password"
                 } }
 
@@ -30,7 +30,7 @@ RSpec.describe SessionsController, type: :controller do
         context "with valid params" do
             it "logs in the user and redirects to the user show page" do
                 post :create, params: { user: {
-                                                username: "Caligula",
+                                                username: user.username,
                                                 password: "Password"
                 } }
 
@@ -58,7 +58,7 @@ RSpec.describe SessionsController, type: :controller do
             user.save!
 
             post :create, params: { user: {
-                                            username: "Caligula",
+                                            username: user.username,
                                             password: "Password"
             } }
         end

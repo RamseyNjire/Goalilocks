@@ -46,7 +46,7 @@ RSpec.describe User, type: :model do
     before { user.save! }
     context "with valid user credentials" do
       it "returns the correct user" do
-        expect(User.find_by_credentials("Caligula", "Password")).to eq(user)
+        expect(User.find_by_credentials(user.username, "Password")).to eq(user)
       end
     end
 

@@ -36,7 +36,7 @@ feature "the signup process" do
         end
 
         scenario "redirects to user show page after signup" do
-            expect(page).to have_content "Caligula"
+            expect(page).to have_content user.username
         end
 
         scenario "logout button is visible" do
