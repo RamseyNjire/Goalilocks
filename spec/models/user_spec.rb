@@ -34,6 +34,10 @@ RSpec.describe User, type: :model do
     
   end
 
+  describe "associations" do
+    it { should have_many(:goals) }
+  end
+
   describe "#is_password?(password)" do
     before { user.save! }
 
