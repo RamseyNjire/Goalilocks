@@ -6,6 +6,9 @@ class GoalsController < ApplicationController
     end
 
     def create
+        goal_params[:is_private] = (goal_params[:is_private] == "true") ? true : false
+        goal_params[:is_complete] = (goal_params[:is_complete] == "true") ? true : false
+        
         @goal = Goal.new(goal_params)
 
         if @goal.save
