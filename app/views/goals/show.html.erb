@@ -1,0 +1,6 @@
+<h1><%= @goal.title %></h1>
+
+<p>Privacy Status: <%= @goal.is_private == true ? "Private" : "Public" %></p>
+<p>Completion Status: <%= @goal.is_complete == true ? "Completed" : "In Progress" %></p>
+
+<pre><%= @goal.description %></pre>
