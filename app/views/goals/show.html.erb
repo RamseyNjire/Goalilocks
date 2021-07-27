@@ -4,3 +4,5 @@
 <p>Completion Status: <%= @goal.is_complete == true ? "Completed" : "In Progress" %></p>
 
 <pre><%= @goal.description %></pre>
+
+<a href="<%= edit_goal_url(@goal) %>">Update Goal</a>
