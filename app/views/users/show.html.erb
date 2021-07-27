@@ -3,10 +3,10 @@
 <h2>Your Goals</h2>
 
 <% @user.goals.each do |goal| %>
-    <h1><%= goal.title %></h1>
+    <h3><%= goal.title %></h3>
     <p><%= goal.description %></p>
-    <p><%= goal.is_complete == true ? "Completed" : "In Progress" %></p>
-    <p><%= goal.is_private == true ? "Private" : "Public" %></p>
+    <p>Completion Status: <%= goal.is_complete == true ? "Completed" : "In Progress" %></p>
+    <p>Privacy Status: <%= goal.is_private == true ? "Private" : "Public" %></p>
 <% end %>
 
 <a href="<%= new_goal_url %>">New Goal</a>
