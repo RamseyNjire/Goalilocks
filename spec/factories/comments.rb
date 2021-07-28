@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    writer { create(user) }
     body { "This is a test comment" }
+    association :writer, factory: :comment_writer
     trait :for_goal do
       association :commentable, factory: :goal
     end

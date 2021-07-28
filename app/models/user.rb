@@ -29,6 +29,16 @@ class User < ApplicationRecord
         dependent: :destroy
     )
 
+    has_many :comments, as: :commentable
+
+    has_many(
+        :written_comments,
+        class_name: "Comment",
+        foreign_key: :user_id,
+        primary_key: :id,
+        dependent: :destroy
+    )
+
     def password=(password)
         @password = password
         self.password_digest = BCrypt::Password.create(password)

@@ -16,5 +16,8 @@ FactoryBot.define do
     factory :goal_creator do
       username { "Zeno" }
     end
+    factory :comment_writer do
+      username { "Cicero" }
+    end
   end
 end
