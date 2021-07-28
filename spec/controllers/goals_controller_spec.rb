@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GoalsController, type: :controller do
     subject(:goal){ build(:goal) }
-    let(:user){ goal.creator }
+    let(:user){ build(:goal_creator) }
     before(:each) { allow(controller).to receive(:current_user){ user } }
 
     describe "GET #new" do
@@ -24,6 +24,7 @@ RSpec.describe GoalsController, type: :controller do
 
     describe "POST #create" do
         context "with valid params" do
+            before { user.save! }
             it "redirects to the goal show page" do
                 post :create, params: { goal: {
                                                 title: "Test Goal",
@@ -39,6 +40,7 @@ RSpec.describe GoalsController, type: :controller do
         end
 
         context "with invalid params" do
+            before { user.save! }
             it "renders the new page" do
                 post :create, params: { goal: {
                                                 description: "test goal"
@@ -86,11 +88,11 @@ RSpec.describe GoalsController, type: :controller do
         end
     end
     
-    describe "PUT #update" do
+    describe "PATCH #update" do
         before { goal.save! }
         context "when logged in" do
             it "redirects the goal show page" do
-                put :update, params: { id: goal.id, goal: {
+                patch :update, params: { id: goal.id, goal: {
                                                             is_complete: true                         
                 } }
                 expect(response).to redirect_to(goal_url(goal))
@@ -109,8 +111,9 @@ RSpec.describe GoalsController, type: :controller do
     end
 
     describe "DELETE #destroy" do
-        before{ goal.save! }
+        before { goal.save! }
         context "when logged in" do
+            let(:user) { goal.creator }
             it "redirects to user show page" do
                 delete :destroy, params: { id: goal.id }
                 expect(response).to redirect_to(user_url(user))
