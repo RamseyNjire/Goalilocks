@@ -12,6 +12,8 @@
 #  updated_at  :datetime         not null
 #
 class Goal < ApplicationRecord
+    include Commentable
+
     validates :title, presence: true
     validates :description, presence: true
 
@@ -21,7 +23,5 @@ class Goal < ApplicationRecord
         foreign_key: :creator_id,
         primary_key: :id
     )
-
-    has_many :comments, as: :commentable, dependent: :destroy
 
 end

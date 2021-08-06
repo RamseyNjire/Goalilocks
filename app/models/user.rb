@@ -10,6 +10,8 @@
 #  session_token   :string           not null
 #
 class User < ApplicationRecord
+    include Commentable
+
     attr_reader :password
     validates :username, presence: true
     validates :username, uniqueness: true
@@ -28,8 +30,6 @@ class User < ApplicationRecord
         primary_key: :id,
         dependent: :destroy
     )
-
-    has_many :comments, as: :commentable, dependent: :destroy
 
     has_many(
         :written_comments,
