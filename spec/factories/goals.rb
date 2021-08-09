@@ -18,5 +18,8 @@ FactoryBot.define do
     is_complete { false }
     is_private { false }
     association :creator, factory: :goal_creator
+    factory :commented_goal do
+      association :creator, factory: :commented_user
+    end
   end
 end

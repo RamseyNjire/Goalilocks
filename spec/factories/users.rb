@@ -19,5 +19,8 @@ FactoryBot.define do
     factory :comment_writer do
       username { "Cicero" }
     end
+    factory :commented_user do
+      username { "Constantine" }
+    end
   end
 end
