@@ -32,7 +32,7 @@ class GoalsController < ApplicationController
     def update
         @goal = Goal.find_by(id: params[:id])
 
-        if @goal.update_attributes!(goal_params)
+        if @goal.update_attributes(goal_params)
             redirect_to goal_url(@goal)
         else
             flash[:errors] = @goal.errors.full_messages

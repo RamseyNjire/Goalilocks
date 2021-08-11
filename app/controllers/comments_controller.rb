@@ -14,6 +14,19 @@ class CommentsController < ApplicationController
     end
 
     def edit
+        render :edit
+    end
+
+    def update
+        @comment = Comment.find(params[:id])
+        @commentable = @comment.commentable
+
+        if @comment.update_attributes(comment_params)
+            redirect_to_commentable(@commentable)
+        else
+            flash[:errors] = @comment.errors.full_messages
+            redirect_to_commentable(@commentable)
+        end
     end
 
 
