@@ -17,7 +17,7 @@ FactoryBot.define do
       username { "Zeno" }
     end
     factory :comment_writer do
-      username { "Cicero" }
+      username { Faker::Name.name }
     end
     factory :commented_user do
       username { "Constantine" }
