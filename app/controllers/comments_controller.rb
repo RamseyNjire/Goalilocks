@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     end
 
     def update
-        @comment = Comment.find(params[:id])
+        @comment = Comment.find_by(id: params[:id])
         @commentable = @comment.commentable
 
         if @comment.update_attributes(comment_params)
@@ -27,6 +27,14 @@ class CommentsController < ApplicationController
             flash[:errors] = @comment.errors.full_messages
             redirect_to_commentable(@commentable)
         end
+    end
+
+    def destroy
+        @comment = Comment.find_by(id: params[:id])
+        @commentable = @comment.commentable
+        @comment.destroy!
+
+        redirect_to_commentable(@commentable)
     end
 
 

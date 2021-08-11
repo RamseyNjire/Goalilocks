@@ -145,9 +145,12 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     describe "PATCH #update" do
+        before do
+            user_comment.save!
+            goal_comment.save!
+        end
         context "when logged in" do
             context "updating a user comment" do
-                before { user_comment.save! }
                 it "redirects to the user show page" do
                     patch :update, params: {
                                             id: user_comment.id,
@@ -160,7 +163,6 @@ RSpec.describe CommentsController, type: :controller do
             end
 
             context "updating a goal comment" do
-                before { goal_comment.save }
                 it "redirects to the goal show page" do
                     patch :update, params: {
                                             id: goal_comment.id,
@@ -174,12 +176,8 @@ RSpec.describe CommentsController, type: :controller do
         end
 
         context "when not logged in" do
-            before do
-                user_comment.save!
-                goal_comment.save!
-                allow(controller).to receive(:current_user){ nil }
-            end
-            
+            before { allow(controller).to receive(:current_user){ nil } }
+
             it "redirects to the login page" do
                     patch :update, params: {
                                             id: user_comment.id,
@@ -196,6 +194,40 @@ RSpec.describe CommentsController, type: :controller do
                                             }
                     }
                     expect(response).to redirect_to(new_session_url)
+            end
+        end
+    end
+
+    describe "delete #destroy" do
+        before do
+            user_comment.save!
+            goal_comment.save!
+        end
+
+        context "when logged in" do
+            it "redirects to the user show page" do
+                delete :destroy, params: { id: user_comment.id }
+
+                expect(Comment.find_by(id: user_comment.id)).to be nil
+                expect(response).to redirect_to(user_url(user_comment.commentable))
+            end
+
+            it "redirects to the goal show page" do
+                delete :destroy, params: { id: goal_comment.id }
+
+                expect(Comment.find_by(id: goal_comment.id)).to be nil
+                expect(response).to redirect_to(goal_url(goal_comment.commentable))    
+            end
+        end
+
+        context "when not logged in" do
+            before { allow(controller).to receive(:current_user){ nil } }
+            it "redirects to the login page" do
+                delete :destroy, params: { id: user_comment.id }
+                expect(response).to redirect_to(new_session_url)
+
+                delete :destroy, params: { id: goal_comment.id }
+                expect(response).to redirect_to(new_session_url)
             end
         end
     end
