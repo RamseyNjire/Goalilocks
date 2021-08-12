@@ -23,4 +23,9 @@ class ApplicationController < ActionController::Base
     def require_no_current_user!
         redirect_to user_url(current_user) unless current_user.nil?
     end
+
+    def require_resource_owner(resource)
+        redirect_to new_session_url unless ((resource.user_id || resource.creator_id) == current_user.id)
+    end
+
 end

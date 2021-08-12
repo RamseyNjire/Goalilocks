@@ -1,5 +1,6 @@
 class GoalsController < ApplicationController
     before_action :require_current_user!
+    before_action :set_goal, only: %i[show edit update destroy]
 
     def new
         @goal = Goal.new
@@ -20,18 +21,14 @@ class GoalsController < ApplicationController
     end
 
     def show
-        @goal = Goal.find_by(id: params[:id])
         render :show
     end
 
     def edit
-        @goal = Goal.find_by(id: params[:id])
         render :edit
     end
 
     def update
-        @goal = Goal.find_by(id: params[:id])
-
         if @goal.update_attributes(goal_params)
             redirect_to goal_url(@goal)
         else
@@ -41,7 +38,6 @@ class GoalsController < ApplicationController
     end
 
     def destroy
-        @goal = Goal.find_by(id: params[:id])
         @user = @goal.creator
         @goal.destroy
         redirect_to user_url(@user)
@@ -49,6 +45,10 @@ class GoalsController < ApplicationController
 
 
     private
+
+    def set_goal
+        @goal = Goal.find_by(id: params[:id])
+    end
 
     def goal_params
         params.require(:goal).permit(:title, :description, :is_complete, :is_private, :creator_id)

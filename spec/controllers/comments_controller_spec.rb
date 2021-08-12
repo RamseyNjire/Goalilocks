@@ -121,8 +121,11 @@ RSpec.describe CommentsController, type: :controller do
                 goal_comment.save!
             end
             it "renders the edit template" do
+                allow(controller).to receive(:current_user){ user_comment.writer }
                 get :edit, params: { id: user_comment.id }
                 expect(response).to render_template(:edit)
+                
+                allow(controller).to receive(:current_user){ goal_comment.writer }
                 get :edit, params: { id: goal_comment.id }
                 expect(response).to render_template(:edit)
             end
@@ -152,6 +155,7 @@ RSpec.describe CommentsController, type: :controller do
         context "when logged in" do
             context "updating a user comment" do
                 it "redirects to the user show page" do
+                    allow(controller).to receive(:current_user){ user_comment.writer }
                     patch :update, params: {
                                             id: user_comment.id,
                                             comment: {
@@ -164,6 +168,7 @@ RSpec.describe CommentsController, type: :controller do
 
             context "updating a goal comment" do
                 it "redirects to the goal show page" do
+                    allow(controller).to receive(:current_user){ goal_comment.writer }
                     patch :update, params: {
                                             id: goal_comment.id,
                                             comment: {
@@ -206,6 +211,7 @@ RSpec.describe CommentsController, type: :controller do
 
         context "when logged in" do
             it "redirects to the user show page" do
+                allow(controller).to receive(:current_user){ user_comment.writer }
                 delete :destroy, params: { id: user_comment.id }
 
                 expect(Comment.find_by(id: user_comment.id)).to be nil
@@ -213,6 +219,7 @@ RSpec.describe CommentsController, type: :controller do
             end
 
             it "redirects to the goal show page" do
+                allow(controller).to receive(:current_user){ goal_comment.writer }
                 delete :destroy, params: { id: goal_comment.id }
 
                 expect(Comment.find_by(id: goal_comment.id)).to be nil
