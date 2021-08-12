@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe GoalsController, type: :controller do
     subject(:goal){ build(:goal) }
-    let(:user){ build(:goal_creator) }
-    before(:each) { allow(controller).to receive(:current_user){ user } }
+    let(:user){ create(:goal_creator) }
+    before(:each) { allow(controller).to receive(:current_user){ goal.creator } }
 
     describe "GET #new" do
         context "when logged in" do
@@ -71,7 +71,9 @@ RSpec.describe GoalsController, type: :controller do
     end
 
     describe "GET #edit" do
-        before { goal.save! }
+        before do
+            goal.save!
+        end
         context "when logged in" do
             it "renders the edit template" do
                 get :edit, params: { id: goal.id }
@@ -89,7 +91,9 @@ RSpec.describe GoalsController, type: :controller do
     end
     
     describe "PATCH #update" do
-        before { goal.save! }
+        before do
+            goal.save!
+        end
         context "when logged in" do
             it "redirects the goal show page" do
                 patch :update, params: { id: goal.id, goal: {
@@ -113,10 +117,9 @@ RSpec.describe GoalsController, type: :controller do
     describe "DELETE #destroy" do
         before { goal.save! }
         context "when logged in" do
-            let(:user) { goal.creator }
             it "redirects to user show page" do
                 delete :destroy, params: { id: goal.id }
-                expect(response).to redirect_to(user_url(user))
+                expect(response).to redirect_to(user_url(goal.creator))
             end
         end
 

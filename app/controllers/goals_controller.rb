@@ -1,6 +1,7 @@
 class GoalsController < ApplicationController
     before_action :require_current_user!
     before_action :set_goal, only: %i[show edit update destroy]
+    before_action :require_goal_owner!, only: %i[edit update destroy]
 
     def new
         @goal = Goal.new
@@ -48,6 +49,11 @@ class GoalsController < ApplicationController
 
     def set_goal
         @goal = Goal.find_by(id: params[:id])
+    end
+
+    def require_goal_owner!
+        set_goal
+        redirect_to new_session_url unless @goal.creator == current_user
     end
 
     def goal_params

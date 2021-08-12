@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
     before_action :require_current_user!
     before_action :set_comment, only: %i[edit update destroy]
-    before_action :require_comment_owner, only: %i[edit update destroy]
+    before_action :require_comment_owner!, only: %i[edit update destroy]
     
     def create
         @commentable = find_commentable
@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
         @commentable = @comment.commentable
     end
 
-    def require_comment_owner
+    def require_comment_owner!
         set_comment
         redirect_to new_session_url unless @comment.writer == current_user
     end
